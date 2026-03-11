@@ -10,7 +10,7 @@ The environment includes public and private subnets, a bastion host for secure S
 
 ## Architecture
 
-![Architecture Diagram](architecture/vpc-architecture-diagram.png)
+![Architecture Diagram](diagrams/vpc-architecture.png)
 
 ---
 
@@ -51,41 +51,69 @@ This architecture follows several cloud security best practices:
 
 ---
 
-## Deployment Steps
+## Deployment Verification
 
-1. Create a VPC with CIDR block `172.31.0.0/16`
-2. Create public and private subnets
-3. Attach an Internet Gateway to the VPC
-4. Deploy a NAT Gateway in the public subnet
-5. Configure route tables for public and private traffic
-6. Deploy a bastion host EC2 instance
-7. Deploy a private EC2 instance
-8. Configure security groups for SSH access
-9. Enable AWS CloudTrail for auditing
+### VPC Created
+
+![VPC Created](screenshots/vpc-created.png)
 
 ---
 
-## Verification
+### Subnets Created
 
-### Bastion Host SSH Access
-
-![Bastion SSH](screenshots/bastion-ssh.png)
+![Subnets](screenshots/subnets-created.png)
 
 ---
 
-### Private Instance Access via Bastion
+### Internet Gateway
 
-![Private EC2 SSH](screenshots/private-ec2-ssh.png)
-
----
-
-### Private Instance Internet Access via NAT
-
-![Internet Access Test](screenshots/private-internet-test.png)
+![Internet Gateway](screenshots/internet-gateway.png)
 
 ---
 
-### CloudTrail Logging Enabled
+### NAT Gateway
+
+![NAT Gateway](screenshots/nat-gateway.png)
+
+---
+
+### Bastion Host Instance
+
+![Bastion Instance](screenshots/bastion-instance.png)
+
+---
+
+### Bastion Security Group
+
+![Bastion SG](screenshots/bastion-sg.png)
+
+---
+
+### Private EC2 Instance
+
+![Private Instance](screenshots/private-instance.png)
+
+---
+
+### Private Instance Security Group
+
+![Private SG](screenshots/private-instance-sg.png)
+
+---
+
+### Public Route Table
+
+![Public Route Table](screenshots/public-route-table.png)
+
+---
+
+### Private Route Table
+
+![Private Route Table](screenshots/private-route-table.png)
+
+---
+
+### CloudTrail Enabled
 
 ![CloudTrail](screenshots/cloudtrail-enabled.png)
 
