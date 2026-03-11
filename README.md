@@ -1,84 +1,103 @@
-# secure-aws-vpc-architecture
-
 # Secure AWS VPC Architecture
 
 ## Project Overview
 
-This project demonstrates how to design and deploy a secure AWS network architecture using industry security best practices.
+This project demonstrates the deployment of a secure AWS Virtual Private Cloud (VPC) architecture that isolates internal resources while allowing controlled administrative access and outbound internet connectivity.
 
-The environment includes:
-
-- Custom Virtual Private Cloud (VPC)
-- Public and private subnets
-- Internet Gateway
-- NAT Gateway for outbound private traffic
-- Bastion host for secure administrative access
-- Private EC2 instance isolated from the internet
-- Security Groups and Network ACLs for layered network security
-- IAM roles implementing least-privilege access
-- AWS CloudTrail for API activity auditing
-- Amazon GuardDuty for threat detection
-
-This project simulates a real-world cloud security environment where sensitive systems are isolated in private networks and accessed securely through controlled entry points.
+The environment includes public and private subnets, a bastion host for secure SSH access, a NAT gateway for outbound connectivity from private resources, and AWS CloudTrail for logging and auditing.
 
 ---
 
-## Architecture Overview
+## Architecture
 
-The architecture separates resources into public and private network segments.
-
-Public Subnet
-- Bastion Host (SSH entry point)
-- NAT Gateway for outbound traffic
-
-Private Subnet
-- Internal EC2 instance
-- No direct internet access
-
-Traffic Flow
-
-User → Bastion Host → Private EC2  
-Private EC2 → NAT Gateway → Internet
+![Architecture Diagram](architecture/vpc-architecture-diagram.png)
 
 ---
 
-## Security Features
+## Components
 
-This architecture implements multiple layers of security:
+### VPC
+A Virtual Private Cloud provides an isolated network environment within AWS where resources are deployed.
 
-- Network segmentation using VPC and subnets
-- Bastion host controlled SSH access
-- Security Groups restricting inbound traffic
-- Network ACLs enforcing subnet-level rules
-- IAM roles preventing credential exposure
-- CloudTrail logging all API actions
-- GuardDuty detecting suspicious behavior
+### Public Subnet
+Contains the bastion host which allows controlled SSH access into the environment.
+
+### Private Subnet
+Contains internal EC2 instances that are not directly accessible from the internet.
+
+### Bastion Host
+A publicly accessible EC2 instance used as a secure jump server to access private resources.
+
+### NAT Gateway
+Allows private subnet resources to access the internet without exposing them to inbound internet traffic.
+
+### Security Groups
+Act as stateful firewalls controlling inbound and outbound traffic for EC2 instances.
+
+### CloudTrail
+Records AWS API activity for auditing and security monitoring.
 
 ---
 
-## Skills Demonstrated
+## Security Design
 
-AWS Cloud Networking  
-VPC Architecture Design  
-Network Security (Security Groups & NACLs)  
-Identity and Access Management (IAM)  
-Security Monitoring (CloudTrail & GuardDuty)
+This architecture follows several cloud security best practices:
+
+• Isolation of public and private resources  
+• Bastion host for controlled administrative access  
+• Private instances without public IP addresses  
+• Outbound-only internet access via NAT gateway  
+• Logging of infrastructure activity using CloudTrail
 
 ---
 
-## Project Documentation
+## Deployment Steps
 
-Architecture Diagram  
-docs/00-architecture.md
+1. Create a VPC with CIDR block `172.31.0.0/16`
+2. Create public and private subnets
+3. Attach an Internet Gateway to the VPC
+4. Deploy a NAT Gateway in the public subnet
+5. Configure route tables for public and private traffic
+6. Deploy a bastion host EC2 instance
+7. Deploy a private EC2 instance
+8. Configure security groups for SSH access
+9. Enable AWS CloudTrail for auditing
 
-Build Process  
-docs/01-build-steps.md
+---
 
-Security Configuration  
-docs/02-security-controls.md
+## Verification
 
-Validation Testing  
-docs/03-validation-tests.md
+### Bastion Host SSH Access
 
-Cleanup and Cost Control  
-docs/04-cleanup.md
+![Bastion SSH](screenshots/bastion-ssh.png)
+
+---
+
+### Private Instance Access via Bastion
+
+![Private EC2 SSH](screenshots/private-ec2-ssh.png)
+
+---
+
+### Private Instance Internet Access via NAT
+
+![Internet Access Test](screenshots/private-internet-test.png)
+
+---
+
+### CloudTrail Logging Enabled
+
+![CloudTrail](screenshots/cloudtrail-enabled.png)
+
+---
+
+## Technologies Used
+
+AWS VPC  
+AWS EC2  
+AWS NAT Gateway  
+AWS Internet Gateway  
+AWS Security Groups  
+AWS CloudTrail  
+Linux (Amazon Linux 2023)  
+SSH
